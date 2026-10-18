@@ -1,0 +1,165 @@
+{
+  "ui": {
+    "role": "Software Developer · C# · .NET · SQL",
+    "facts": "At Asartec since 2025 · Girona · open to remote",
+    "hint": "This is my room. Scroll or drag to walk through it, and click things to open them.",
+    "hintTouch": "This is my room. Swipe to walk through it and tap things to open them.",
+    "keyboard": "My custom keyboard\nCase: MonsGeek M1W\nSwitches: Akko V3 Cream Yellow Pro\nKeycaps: Temu",
+    "mouse": "My mouse\nLogitech G Pro X Superlight 2",
+    "pc": "My PC\nCPU: AMD Ryzen 7 5800X\nGPU: NVIDIA GeForce RTX 5060 Ti\nRAM: 32 GB DDR4 3200 (Kingston Fury)\nMotherboard: ASUS Prime B550M-A\nSSD: 1 TB Kioxia Exceria Plus G3",
+    "bonsaiSign": "Amateur bonsai\nStill learning. At home I grow\na serissa, a hakuro nishiki and a ficus",
+    "back": "Back to the room",
+    "closetHint": "Click a piece of clothing to see each stage.",
+    "terraceHint": "Each bonsai is a skill. Tap a tree, or pick one here:",
+    "loading": "Loading the room…",
+    "stages": "Stages",
+    "quickCv": "CV (PDF)",
+    "close": "Close",
+    "download": "Download CV (PDF)",
+    "cvPreview": "First page of the CV",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "sections": {
+    "about": {
+      "menu": "About",
+      "title": "About me",
+      "body": ["I'm a software developer from Girona, Spain. I work full-time at Asartec, building occupational health & safety (PRL) software with C#, VB.NET and SQL, and I study Computer Engineering part-time at UOC.", "I'm an early adopter of new tech: I use Claude Code every day to generate, review and document code, and I've built skills, hooks and agents for our team.", "I work best when I understand the logic behind a task. I'm a calm debugger and a cooperative teammate, happiest in small teams with autonomy and clear requirements.", "Languages: Catalan and Spanish (native), English (B2)."]
+    },
+    "projects": {
+      "menu": "Projects",
+      "title": "Projects",
+      "items": [
+        {
+          "title": "asartec.net — company helpdesk",
+          "meta": "Asartec · built alone",
+          "body": "A custom helpdesk that became the company-wide ticketing system. First version in Node.js, later rebuilt in PHP.",
+          "tags": ["Node.js", "PHP", "Web"]
+        },
+        {
+          "title": "From 10–20 s to under 1 s",
+          "meta": "Asartec · performance",
+          "body": "The 'responsables' web app took 10–20 seconds to load. Diagnosing it with Claude Code, I found that logs written inside the app folder were triggering restarts. After the fix it loads in under a second.",
+          "tags": [".NET", "Debugging", "Claude Code"]
+        },
+        {
+          "title": "Occupational risk-prevention software",
+          "meta": "Asartec · day-to-day work",
+          "body": "I develop a VB.NET/C# Windows Forms PRL application, a C# API and .NET MAUI web/mobile apps used by universities and prevention services.",
+          "tags": ["C#", "VB.NET", "Windows Forms", ".NET MAUI", "SQL"]
+        },
+        {
+          "title": "AI-assisted development",
+          "meta": "Asartec · team of 3",
+          "body": "I automated parts of our workflow with Claude Code: code generation, code review and documentation, plus custom skills, hooks and agents.",
+          "tags": ["Claude Code", "Automation"]
+        },
+        {
+          "title": "DAM final project",
+          "meta": "Institut Montilivi · graded 10/10",
+          "body": "Final project of my vocational degree in Multiplatform Application Development.",
+          "tags": ["DAM"]
+        },
+        {
+          "title": "This portfolio",
+          "meta": "Personal project",
+          "body": "A 3D room built with Three.js and Vite, hosted on GitHub Pages, developed with Claude Code. Every object is a section.",
+          "tags": ["Three.js", "JavaScript", "Vite", "Claude Code"],
+          "link": {
+            "href": "https://github.com/mcotonatcruset/mcotonatcruset.github.io",
+            "text": "Source code on GitHub"
+          }
+        }
+      ]
+    },
+    "experience": {
+      "menu": "Experience",
+      "title": "Experience & education",
+      "items": [
+        {
+          "title": "Software Developer — Asartec",
+          "meta": "May 2025 – present · Girona",
+          "body": "PRL desktop, API and .NET MAUI apps. Built the company helpdesk. I support the other junior developer on a team of 3."
+        },
+        {
+          "title": "Software Developer — Accenture",
+          "meta": "Jan 2025 – Apr 2025 · Girona",
+          "body": "Full-stack work: Angular front end, Node.js and Java/PHP back end and APIs, in agile sprints."
+        },
+        {
+          "title": "Software Developer Intern — Accenture",
+          "meta": "Nov 2023 – Jul 2024 · Girona",
+          "body": "Angular and Node.js features, systems integration."
+        },
+        {
+          "title": "BSc in Computer Engineering — UOC",
+          "meta": "2024 – present · part-time"
+        },
+        {
+          "title": "Multiplatform Application Development (DAM) — Institut Montilivi",
+          "meta": "2022 – 2024 · final grade 8.20/10, final project 10/10"
+        }
+      ]
+    },
+    "skills": {
+      "menu": "Skills",
+      "title": "Skills",
+      "body": ["Every bonsai on the terrace is a skill: the bigger the tree, the longer I've been growing it. The small one is what I'm growing next."],
+      "items": [
+        {
+          "title": "C# · .NET",
+          "meta": "Moyogi · Japanese black pine",
+          "body": "The biggest tree on the terrace: my main stack. Desktop apps, a C# API and .NET MAUI web and mobile apps at Asartec.",
+          "tags": ["C#", ".NET", ".NET MAUI", "Windows Forms", "Visual Studio", "Git", "Unity"]
+        },
+        {
+          "title": "SQL",
+          "meta": "Chokkan · Japanese cedar",
+          "body": "Straight and orderly, like a good schema: the data under everything I build.",
+          "tags": ["SQL", "SQL Server", "Oracle", "SQL Developer", "MongoDB", "Firebase"]
+        },
+        {
+          "title": "VB.NET",
+          "meta": "Han-kengai · juniper",
+          "body": "Old wood that still holds strong: the Windows Forms PRL application I develop at Asartec.",
+          "tags": ["VB.NET", "Windows Forms"]
+        },
+        {
+          "title": "Web",
+          "meta": "Shidare · weeping willow",
+          "body": "Flexible and always moving: Angular front ends and Node.js, Java and PHP back ends at Accenture, and the helpdesk I built at Asartec.",
+          "tags": ["TypeScript / JavaScript", "Angular", "Node.js", "PHP", "Java", "VS Code"]
+        },
+        {
+          "title": "What's next",
+          "meta": "Sapling · young olive, wired",
+          "body": "Still wired, still in training: where I want to grow next.",
+          "tags": ["Backend .NET", "AI & automation", "Claude Code", "Python", "Cloud"]
+        }
+      ]
+    },
+    "makes": {
+      "menu": "3D prints",
+      "title": "Things I've printed",
+      "body": ["Printed at home on my Ender-3 V3 SE. Totoro is the first one on the shelf; more prints are on the way as I photograph them."],
+      "items": [
+        {
+          "title": "Totoro",
+          "meta": "Printed at home · Ender-3 V3 SE",
+          "body": "About 14 cm tall. The first figure to earn a place on the shelf above the printer.",
+          "alt": "Totoro on the shelf"
+        }
+      ]
+    },
+    "cv": {
+      "menu": "CV",
+      "title": "Print my CV",
+      "body": ["Short on time? Here is everything on two pages."]
+    },
+    "contact": {
+      "menu": "Contact",
+      "title": "Get in touch",
+      "body": ["Open to backend .NET/C# and AI & automation roles, remote or in Girona."]
+    }
+  }
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Martí Cotonat · Software Developer</title>
+    <meta name="description" content="Interactive portfolio of Martí Cotonat Cruset, software developer (C#, .NET, SQL) from Girona, Spain." />
+    <meta name="theme-color" content="#7d889c" />
+    <!-- link previews (LinkedIn, Slack, WhatsApp): og.jpg is a 1200×630 shot of the room -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mcotonatcruset.github.io/" />
+    <meta property="og:title" content="Martí Cotonat Cruset · Software Developer" />
+    <meta property="og:description" content="C#, .NET and SQL developer from Girona. Walk through my room: projects on the monitors, experience in the wardrobe, skills as bonsai." />
+    <meta property="og:image" content="https://mcotonatcruset.github.io/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Young+Serif&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <header class="intro">
+      <h1>Martí Cotonat Cruset</h1>
+      <p class="role" data-i18n="role"></p>
+      <p class="facts" data-i18n="facts"></p>
+      <!-- the two things a recruiter came for, always one click away -->
+      <div class="quick">
+        <a class="btn small cv-link" download data-i18n="quickCv"></a>
+        <button class="btn small ghost contact-link"></button>
+        <select id="lang" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="ca">CA</option>
+          <option value="es">ES</option>
+        </select>
+      </div>
+      <p class="hint" data-i18n="hint"></p>
+      <p class="loading" data-i18n="loading" aria-live="polite"></p>
+    </header>
+
+    <nav class="menu" aria-label="Sections">
+      <div class="links"></div>
+    </nav>
+
+    <div class="tooltip" hidden></div>
+
+    <div class="closet" hidden>
+      <button class="back" data-i18n="back"></button>
+      <h2></h2>
+      <p></p>
+      <ul class="stages"></ul>
+    </div>
+    <article class="popcard" hidden aria-live="polite"></article>
+    <dialog class="specimen"></dialog>
+
+    <section class="screen" hidden>
+      <div class="bar">
+        <span class="path"></span>
+        <button class="back" data-i18n="back"></button>
+      </div>
+      <div class="content"></div>
+    </section>
+
+    <dialog id="panel">
+      <form method="dialog"><button class="back" data-i18n="back"></button></form>
+      <div class="content"></div>
+    </dialog>
+
+    <noscript>Martí Cotonat Cruset — Software Developer (C#, .NET, SQL). marticotonat@gmail.com · github.com/mcotonatcruset</noscript>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
