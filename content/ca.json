@@ -1,0 +1,165 @@
+{
+  "ui": {
+    "role": "Desenvolupador de software · C# · .NET · SQL",
+    "facts": "A Asartec des del 2025 · Girona · obert a remot",
+    "hint": "Aquesta és la meva habitació. Fes scroll o arrossega per recórrer-la, i clica els objectes per obrir-los.",
+    "hintTouch": "Aquesta és la meva habitació. Llisca per recórrer-la i toca els objectes per obrir-los.",
+    "keyboard": "El meu teclat custom\nCarcassa: MonsGeek M1W\nSwitches: Akko V3 Cream Yellow Pro\nTecles: Temu",
+    "mouse": "El meu ratolí\nLogitech G Pro X Superlight 2",
+    "pc": "El meu PC\nCPU: AMD Ryzen 7 5800X\nGPU: NVIDIA GeForce RTX 5060 Ti\nRAM: 32 GB DDR4 3200 (Kingston Fury)\nPlaca: ASUS Prime B550M-A\nSSD: 1 TB Kioxia Exceria Plus G3",
+    "bonsaiSign": "Bonsais d'aficionat\nEncara aprenent. A casa cultivo\nuna serissa, un hakuro nishiki i un ficus",
+    "back": "Tornar a l'habitació",
+    "closetHint": "Fes clic a una peça de roba per veure cada etapa.",
+    "terraceHint": "Cada bonsai és una habilitat. Toca un arbre o tria'n un aquí:",
+    "loading": "Carregant l'habitació…",
+    "stages": "Etapes",
+    "quickCv": "CV (PDF, EN)",
+    "close": "Tanca",
+    "download": "Descarregar el CV (PDF, en anglès)",
+    "cvPreview": "Primera pàgina del CV",
+    "prev": "Anterior",
+    "next": "Següent"
+  },
+  "sections": {
+    "about": {
+      "menu": "Sobre mi",
+      "title": "Sobre mi",
+      "body": ["Soc desenvolupador de software de Girona. Treballo a jornada completa a Asartec, on fem software de prevenció de riscos laborals (PRL) amb C#, VB.NET i SQL, i estudio Enginyeria Informàtica a temps parcial a la UOC.", "M'agrada adoptar tecnologia nova aviat: faig servir Claude Code cada dia per generar, revisar i documentar codi, i he creat skills, hooks i agents per a l'equip.", "Treballo millor quan entenc la lògica d'una tasca. Depuro amb calma i col·laboro bé, sobretot en equips petits, amb autonomia i requisits clars.", "Idiomes: català i castellà (natius), anglès (B2)."]
+    },
+    "projects": {
+      "menu": "Projectes",
+      "title": "Projectes",
+      "items": [
+        {
+          "title": "asartec.net, el helpdesk de l'empresa",
+          "meta": "Asartec · fet en solitari",
+          "body": "Un helpdesk a mida que ara és el sistema de tiquets de tota l'empresa. Primera versió en Node.js, refeta després en PHP.",
+          "tags": ["Node.js", "PHP", "Web"]
+        },
+        {
+          "title": "De 10-20 s a menys d'1 s",
+          "meta": "Asartec · rendiment",
+          "body": "L'aplicació web de \"responsables\" trigava 10-20 segons a carregar. Diagnosticant-ho amb Claude Code, vaig veure que els logs escrits dins la carpeta de l'aplicació en provocaven el reinici. Ara carrega en menys d'un segon.",
+          "tags": [".NET", "Depuració", "Claude Code"]
+        },
+        {
+          "title": "Software de prevenció de riscos laborals",
+          "meta": "Asartec · feina del dia a dia",
+          "body": "Desenvolupo una aplicació PRL en VB.NET/C# amb Windows Forms, una API en C# i aplicacions web/mòbil amb .NET MAUI, que fan servir universitats i serveis de prevenció.",
+          "tags": ["C#", "VB.NET", "Windows Forms", ".NET MAUI", "SQL"]
+        },
+        {
+          "title": "Desenvolupament assistit per IA",
+          "meta": "Asartec · equip de 3",
+          "body": "He automatitzat parts del nostre flux amb Claude Code: generació, revisió i documentació de codi, i també skills, hooks i agents a mida.",
+          "tags": ["Claude Code", "Automatització"]
+        },
+        {
+          "title": "Projecte final de DAM",
+          "meta": "Institut Montilivi · nota 10/10",
+          "body": "Projecte final del cicle de Desenvolupament d'Aplicacions Multiplataforma.",
+          "tags": ["DAM"]
+        },
+        {
+          "title": "Aquest portfoli",
+          "meta": "Projecte personal",
+          "body": "Una habitació 3D feta amb Three.js i Vite, allotjada a GitHub Pages i desenvolupada amb Claude Code. Cada objecte és una secció.",
+          "tags": ["Three.js", "JavaScript", "Vite", "Claude Code"],
+          "link": {
+            "href": "https://github.com/mcotonatcruset/mcotonatcruset.github.io",
+            "text": "Codi font a GitHub"
+          }
+        }
+      ]
+    },
+    "experience": {
+      "menu": "Trajectòria",
+      "title": "Experiència i formació",
+      "items": [
+        {
+          "title": "Desenvolupador de software, Asartec",
+          "meta": "maig 2025 – actualitat · Girona",
+          "body": "Aplicacions PRL d'escriptori, API i .NET MAUI. He creat el helpdesk de l'empresa. Dono suport a l'altre júnior en un equip de 3."
+        },
+        {
+          "title": "Desenvolupador de software, Accenture",
+          "meta": "gen. 2025 – abr. 2025 · Girona",
+          "body": "Full-stack: front-end en Angular, back-end i APIs en Node.js i Java/PHP, amb sprints àgils."
+        },
+        {
+          "title": "Desenvolupador en pràctiques, Accenture",
+          "meta": "nov. 2023 – jul. 2024 · Girona",
+          "body": "Funcionalitats en Angular i Node.js, integració de sistemes."
+        },
+        {
+          "title": "Grau en Enginyeria Informàtica, UOC",
+          "meta": "2024 – actualitat · a temps parcial"
+        },
+        {
+          "title": "CFGS Desenvolupament d'Aplicacions Multiplataforma (DAM), Institut Montilivi",
+          "meta": "2022 – 2024 · nota final 8,20/10, projecte final 10/10"
+        }
+      ]
+    },
+    "skills": {
+      "menu": "Habilitats",
+      "title": "Habilitats",
+      "body": ["Cada bonsai de la terrassa és una habilitat: com més gran és l'arbre, més temps fa que el cultivo. El petit és el que començo a fer créixer."],
+      "items": [
+        {
+          "title": "C# · .NET",
+          "meta": "Moyogi · pi negre japonès",
+          "body": "L'arbre més gran de la terrassa: el meu stack principal. Aplicacions d'escriptori, una API en C# i apps web i mòbils amb .NET MAUI a Asartec.",
+          "tags": ["C#", ".NET", ".NET MAUI", "Windows Forms", "Visual Studio", "Git", "Unity"]
+        },
+        {
+          "title": "SQL",
+          "meta": "Chokkan · cedre japonès",
+          "body": "Recte i ordenat, com un bon esquema: les dades que hi ha sota tot el que construeixo.",
+          "tags": ["SQL", "SQL Server", "Oracle", "SQL Developer", "MongoDB", "Firebase"]
+        },
+        {
+          "title": "VB.NET",
+          "meta": "Han-kengai · ginebre",
+          "body": "Fusta vella que encara aguanta: l'aplicació PRL en Windows Forms que desenvolupo a Asartec.",
+          "tags": ["VB.NET", "Windows Forms"]
+        },
+        {
+          "title": "Web",
+          "meta": "Shidare · salze ploraner",
+          "body": "Flexible i sempre en moviment: frontends en Angular i backends en Node.js, Java i PHP a Accenture, i el helpdesk que vaig fer a Asartec.",
+          "tags": ["TypeScript / JavaScript", "Angular", "Node.js", "PHP", "Java", "VS Code"]
+        },
+        {
+          "title": "El que ve",
+          "meta": "Planter · olivera jove amb filferro",
+          "body": "Encara amb filferro, encara en formació: cap on vull créixer.",
+          "tags": ["Backend .NET", "IA i automatització", "Claude Code", "Python", "Cloud"]
+        }
+      ]
+    },
+    "makes": {
+      "menu": "Impressions 3D",
+      "title": "Coses que he imprès",
+      "body": ["Impreses a casa amb la meva Ender-3 V3 SE. El Totoro és la primera de la lleixa; n'aniran arribant més a mesura que les fotografiï."],
+      "items": [
+        {
+          "title": "Totoro",
+          "meta": "Imprès a casa · Ender-3 V3 SE",
+          "body": "Fa uns 14 cm. La primera figura que s'ha guanyat un lloc a la lleixa de sobre la impressora.",
+          "alt": "El Totoro a la lleixa"
+        }
+      ]
+    },
+    "cv": {
+      "menu": "CV",
+      "title": "Imprimeix el meu CV",
+      "body": ["Vas just de temps? Aquí ho tens tot en dues pàgines."]
+    },
+    "contact": {
+      "menu": "Contacte",
+      "title": "Parlem",
+      "body": ["Obert a feines de backend .NET/C# i d'IA i automatització, en remot o a Girona."]
+    }
+  }
+}

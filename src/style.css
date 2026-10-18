@@ -1,0 +1,214 @@
+:root {
+  /* palette: walnut ink, terracotta from the PLA spool as the one accent, and near-white surfaces tinted a
+     hair toward that terracotta (hue 45) rather than cream. Contrast on --surface: ink 15:1, muted 5.8:1, accent 5:1 */
+  --scene: #7d889c;   /* the lit slate-blue back wall: what shows before the first frame */
+  --ink: #27201d;     /* oklch(0.25 0.012 45) */
+  --muted: #705f58;   /* oklch(0.50 0.025 45) */
+  --surface: #fcf9f8; /* oklch(0.985 0.003 45) */
+  --accent: #b44c31;  /* also 5.2:1 for white text on buttons */
+  --accent-press: #9c3f27; /* hover/pressed buttons, 6.7:1 with white */
+  --chip: #f4eae6;    /* oklch(0.945 0.012 45) */
+  --line: #e5dad5;    /* oklch(0.895 0.014 45) */
+  /* one panel language: every surface is the same sheet */
+  --radius: 16px;
+  --shadow-bar: 0 6px 24px rgb(60 40 20 / 0.15);   /* things resting on the scene: name card, menu, wardrobe card */
+  --shadow-card: 0 18px 48px rgb(60 40 20 / 0.24); /* things opened from it: side panel, cards */
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1);       /* ease-out-quart: no overshoot anywhere */
+  /* type: Young Serif (one weight, like the lettering on the bonsai sign) for names and titles,
+     Atkinson Hyperlegible Next 400/700 for everything you read or press. Major-third scale */
+  --serif: 'Young Serif', Georgia, serif;
+  --sans: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  --t-display: clamp(1.75rem, 1.3rem + 1.2vw, 2.25rem);
+  --t-title: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+  --t-item: 1.25rem;
+  --t-small: 0.875rem;
+  font-family: var(--sans);
+  font-kerning: normal;
+  color: var(--ink);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--scene);
+}
+
+#scene { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+
+/* ---------- surfaces ---------- */
+.intro, .menu, .closet { background: var(--surface); box-shadow: var(--shadow-bar); }
+.intro, .closet { border-radius: var(--radius); padding: 14px 18px; }
+.popcard, dialog { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-card); border: 0; }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; text-wrap: balance; letter-spacing: -0.005em; line-height: 1.15; }
+:is(dialog, .screen, .closet) h2 { margin: 16px 0 10px; font-size: var(--t-title); }
+:is(dialog, .screen, .popcard, .specimen) h3 { margin: 16px 0 4px; font-size: var(--t-item); }
+:is(dialog, .screen, .popcard) p { line-height: 1.55; margin: 0 0 10px; text-wrap: pretty; }
+.meta { color: var(--muted); font-size: var(--t-small); }
+
+/* ---------- controls: one back pill, one close button, one chip ---------- */
+.back, .pop-close, .step, .stage, .menu button, #lang {
+  font: inherit; color: var(--ink); cursor: pointer;
+  border: 0; background: none; border-radius: 999px;
+}
+.back, .stage { box-shadow: inset 0 0 0 1px var(--line); font-size: var(--t-small); padding: 8px 14px; min-height: 36px; }
+.back::before { content: '← '; }
+.pop-close {
+  position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
+  box-shadow: inset 0 0 0 1px var(--line); font-size: 1.1rem; line-height: 1;
+}
+:is(.back, .pop-close, .step, .stage, .menu button):hover, :is(.back, .pop-close, .step, .stage, .menu button):focus-visible { background: var(--chip); }
+
+.btn {
+  display: inline-block; margin-top: 8px; padding: 12px 20px; border-radius: 999px; border: 0;
+  background: var(--accent); color: #fff; text-decoration: none; font: inherit; font-weight: 700; cursor: pointer;
+  transition: background-color 0.15s var(--ease-out), transform 0.15s var(--ease-out);
+}
+.btn:not(.ghost):hover { background: var(--accent-press); }
+:is(.btn, .back, .stage, .pop-close, .step, .menu button):active { transform: scale(0.97); }
+/* one keyboard focus ring everywhere, on top of the hover tint */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn.small { padding: 10px 16px; font-size: var(--t-small); min-height: 44px; }
+.btn.ghost { background: none; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.btn.ghost:hover, .btn.ghost:focus-visible { background: var(--chip); }
+a { color: var(--accent); }
+
+.card { padding: 14px 0; border-top: 1px solid var(--line); }
+.card h3 { margin-top: 0; }
+.chips { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.chips li { background: var(--chip); padding: 3px 10px; border-radius: 999px; font-size: 0.8125rem; }
+.links-list { list-style: none; padding: 0; }
+.links-list li { padding: 10px 0; border-top: 1px solid var(--line); display: grid; }
+.cv-page { display: block; margin-top: 24px; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--line), var(--shadow-bar); }
+.cv-page img { display: block; width: 100%; height: auto; aspect-ratio: 744 / 1052; }
+
+/* ---------- name card ---------- */
+.intro { position: fixed; top: 20px; left: 24px; max-width: 420px; pointer-events: none; }
+.intro h1 { margin: 0; font-size: var(--t-display); }
+.intro .role { margin: 6px 0 0; text-wrap: balance; font-weight: 700; color: var(--accent); }
+.intro .facts { margin: 2px 0 0; font-size: var(--t-small); }
+.intro .hint { margin: 12px 0 0; color: var(--muted); font-size: var(--t-small); line-height: 1.45; }
+.quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; pointer-events: auto; }
+.quick .btn { margin: 0; }
+.loading { margin: 8px 0 0; color: var(--muted); font-size: var(--t-small); }
+.loading::after { content: ' ' attr(data-progress); }
+
+/* ---------- menu ---------- */
+.menu {
+  position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+  display: flex; align-items: center; max-width: calc(100vw - 32px);
+  padding: 6px; border-radius: 999px;
+}
+.menu .links { display: flex; gap: 2px; } /* fits on desktop, wraps on mobile: no sideways scroll to clip the focus ring */
+.menu button, #lang { font-size: 0.9375rem; padding: 8px 12px; white-space: nowrap; }
+.menu button[aria-current] { background: var(--ink); color: var(--surface); }
+#lang { background: var(--chip); margin-left: auto; align-self: center; }
+
+.tooltip {
+  position: fixed; top: 0; left: 0; pointer-events: none;
+  padding: 4px 10px; border-radius: 8px; font-size: var(--t-small);
+  background: var(--ink); color: var(--surface);
+  white-space: pre-line; max-width: 280px;
+}
+.tooltip::first-line { font-weight: 700; }
+
+/* ---------- wardrobe: title card + one card per garment ---------- */
+.closet { position: fixed; top: 20px; left: 24px; max-width: 340px; }
+.closet p { margin: 0; color: var(--muted); font-size: var(--t-small); }
+.stages { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.stage { min-height: 40px; padding: 8px 12px; text-align: left; border-radius: 12px; } /* may run to two lines: a pill would bulge */
+.stage .meta { display: block; font-size: 0.8125rem; }
+
+.popcard {
+  position: fixed; width: 340px; max-width: calc(100vw - 32px); margin: 0;
+  padding: 18px 20px; border-radius: var(--radius);
+}
+.popcard h3 { margin: 0 40px 4px 0; }
+.popcard p { margin: 6px 0 0; }
+
+/* ---------- side panel (CV) ---------- */
+dialog {
+  position: fixed; inset: 16px 16px 16px auto; margin: 0;
+  width: 440px; max-width: calc(100vw - 32px); height: auto; max-height: none;
+  padding: 24px 28px 32px; overflow-y: auto; border-radius: var(--radius);
+}
+dialog[open] { animation: slide-in 0.32s var(--ease-out); }
+dialog::backdrop { background: transparent; }
+@keyframes slide-in { from { transform: translateX(24px); opacity: 0; } }
+
+/* ---------- bonsai / print card: centred, its picture on the left ---------- */
+dialog.specimen {
+  inset: 0; margin: auto; width: min(760px, calc(100vw - 32px)); height: fit-content; max-height: calc(100dvh - 32px);
+  padding: 0; overflow: hidden; grid-template-columns: 5fr 6fr;
+}
+.specimen[open] { display: grid; animation: pop-in 0.32s var(--ease-out); }
+.specimen::backdrop { background: rgb(43 36 32 / 0.35); backdrop-filter: blur(3px); }
+.specimen figure {
+  margin: 0; padding: 24px; display: grid; place-items: center; min-height: 0;
+  background: radial-gradient(circle at 50% 35%, var(--surface), var(--chip));
+}
+.specimen img { width: 100%; max-height: 440px; object-fit: contain; filter: drop-shadow(0 16px 18px rgb(60 40 20 / 0.28)); }
+.specimen .text { padding: 36px 32px 32px; align-self: center; overflow-y: auto; }
+.specimen h3 { margin: 0 0 6px; font-size: var(--t-title); }
+.specimen .meta { margin: 0 0 14px; }
+.specimen .chips { margin-top: 18px; }
+.pager { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
+.pager .meta { margin: 0; min-width: 3.5em; text-align: center; }
+.step { width: 40px; height: 40px; box-shadow: inset 0 0 0 1px var(--line); font-size: 1.25rem; line-height: 1; }
+@keyframes pop-in { from { opacity: 0; transform: translateY(12px) scale(0.97); } }
+
+/* ---------- inside a monitor or the phone: main.js sizes and places it over the 3D screen ---------- */
+.screen {
+  position: fixed; top: 0; left: 0; transform-origin: 0 0;
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--surface); color: var(--ink); border-radius: 6px;
+}
+.screen[hidden] { display: none; }
+.screen .bar {
+  display: flex; align-items: center; gap: 14px; padding: 8px 12px; flex: none;
+  background: var(--chip); color: var(--muted); font-size: var(--t-small); font-weight: 700;
+}
+.screen .path { flex: 1; }
+.screen .back { padding: 4px 12px; min-height: 0; }
+/* a 68ch column: comfortable lines even on a wide monitor */
+.screen .content { overflow-y: auto; padding: 12px max(24px, calc((100% - 68ch) / 2)) 40px; }
+.screen.phone { border-radius: 18px; }
+.screen.phone .content { margin-block: auto; } /* a short contact card sits in the middle of the phone, not under its notch */
+
+@media (max-width: 800px) {
+  /* ponytail: too small to read on a phone, so it takes the whole screen once inside */
+  .screen { inset: 0; width: auto !important; height: auto !important; transform: none !important; border-radius: 0 !important; }
+  .intro { left: 16px; right: 16px; top: 16px; max-width: none; padding: 12px 14px; }
+  .intro .hint { margin-top: 8px; }
+  /* the whole menu fits: wraps onto two rows instead of hiding items behind a sideways scroll */
+  .menu { left: 12px; right: 12px; bottom: 12px; transform: none; max-width: none; border-radius: 22px; flex-wrap: wrap; justify-content: center; }
+  .menu .links { flex-wrap: wrap; justify-content: center; overflow: visible; gap: 0 2px; }
+  .menu button, #lang { min-height: 44px; padding: 10px 9px; font-size: var(--t-small); }
+  .back, .stage, .screen .back { min-height: 44px; }
+  .menu button { min-width: 44px; }
+  .pop-close { width: 44px; height: 44px; top: 8px; right: 8px; }
+  .step { width: 44px; height: 44px; }
+  dialog { inset: auto 0 0 0; width: 100vw; max-width: 100vw; height: 78vh; border-radius: var(--radius) var(--radius) 0 0; padding: 20px 20px 32px; }
+  .closet { left: 16px; right: 16px; top: 16px; max-width: none; }
+  .popcard { left: 16px !important; right: 16px; top: auto !important; bottom: 16px; width: auto; transform-origin: bottom center; }
+  dialog.specimen { grid-template-columns: none; grid-template-rows: auto minmax(0, 1fr); border-radius: var(--radius); }
+  .specimen figure { padding: 16px; }
+  .specimen img { max-height: 32dvh; }
+  .specimen .text { padding: 20px 22px 24px; align-self: start; }
+  @keyframes slide-in { from { transform: translateY(24px); opacity: 0; } }
+}
+
+/* no WebGL: content-only fallback */
+.no3d #scene, .no3d .hint { display: none; }
+.no3d .intro { position: static; padding: 24px; max-width: none; box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  dialog[open], .specimen[open] { animation: none; }
+}
+
+/* panel open: give the scene and the panel the whole screen */
+.intro, .menu { transition: opacity 0.3s var(--ease-out); }
+body:is(:has(dialog[open]), :has(.closet:not([hidden])), :has(.screen:not([hidden]))) :is(.intro, .menu) { opacity: 0; pointer-events: none; }
