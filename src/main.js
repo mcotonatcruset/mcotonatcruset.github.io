@@ -151,9 +151,12 @@ if (renderer) {
     // in the open wardrobe each garment is its own target, on the open terrace each bonsai; while walking, a bonsai,
     // a print or a note, or else the whole object of a section
     const key = focused === 'experience' ? 'item' : focused === 'skills' ? 'skill' : focused ? null : 'section';
-    for (; o && key; o = o.parent) if (o.userData[key] !== undefined || (!focused && (o.userData.skill !== undefined || o.userData.print !== undefined || o.userData.note))) return o;
+    for (; o && key; o = o.parent) {
+      if (o.userData[key] !== undefined || (focused === 'experience' && o.userData.hoop)
+        || (!focused && (o.userData.skill !== undefined || o.userData.print !== undefined || o.userData.note))) return o;
+    }
   }
-  const label = ({ userData: u }) => (u.note ? ui.note(u.note) : u.section ? ui.label(u.section) : u.skill !== undefined ? ui.itemLabel(u.skill, 'skills')
+  const label = ({ userData: u }) => (u.hoop ? ui.note('hoop') : u.note ? ui.note(u.note) : u.section ? ui.label(u.section) : u.skill !== undefined ? ui.itemLabel(u.skill, 'skills')
     : u.print !== undefined ? ui.itemLabel(u.print, 'makes') : ui.itemLabel(u.item));
 
   function highlight(t) {
@@ -199,6 +202,7 @@ if (renderer) {
     canvas.style.cursor = hovered && !hovered.userData.note ? 'pointer' : '';
     if (wasDrag) return snap();
     const t = pick(e);
+    if (focused === 'experience' && t?.userData.hoop) return highlight(null), (tip.hidden = true), ui.startGame();
     if (focused === 'experience') return t ? ui.showItem(t.userData.item, e.clientX, e.clientY) : ui.hideItem();
     if (!t || t.userData.note) return;
     highlight(null);

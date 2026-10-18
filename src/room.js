@@ -349,8 +349,10 @@ function wardrobe(scene) {
     slots.push(['Porta', look, 1, 0]);
     return d;
   });
-  // mini hoop on the inside of the right door (phase 2: mini-game)
-  slots.push(['Cistella', part(doors[1], -0.485, 0.45, -0.03, Math.PI), 1.1, 0]);
+  // mini hoop on the inside of the right door: in the open wardrobe it opens the mini-game (src/hoop.js)
+  const hoop = part(doors[1], -0.485, 0.45, -0.03, Math.PI);
+  hoop.userData.hoop = true;
+  slots.push(['Cistella', hoop, 1.1, 0]);
 
   // the left door is the locker: match jerseys and shorts on two hooks, facing in (rotated π)
   const hook = (y) => {

@@ -18,7 +18,13 @@
     "download": "Download CV (PDF)",
     "cvPreview": "First page of the CV",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "hoop": "Mini-game: shoot some hoops!",
+    "gameTitle": "Mini hoop",
+    "gameHint": "Pull back and let go to shoot: the further you pull, the harder the shot. With the keyboard: Space to aim, Space for power, Space to shoot. A basket is worth 2 points, or 3 from behind the three-point line. You get 30 seconds from the first shot.",
+    "gameScore": "Points: {points} · {left} s",
+    "gameOver": "Time! Points: {points}. Shoot again to play another round.",
+    "gameBest": "Best: {best}"
   },
   "sections": {
     "about": {

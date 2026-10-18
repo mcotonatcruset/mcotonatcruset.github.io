@@ -1,6 +1,7 @@
 import en from '../content/en.json';
 import ca from '../content/ca.json';
 import es from '../content/es.json';
+import { hoopGame } from './hoop.js';
 
 const LANGS = { en, ca, es };
 // same left-to-right order as the walk through the room
@@ -213,7 +214,34 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
   }
   screen.querySelector('.back').onclick = closeScreen;
 
+  // ---- mini-game behind the wardrobe's hoop: a window over the room, back to the open wardrobe on close ----
+  const gameDlg = document.querySelector('dialog.game');
+  const game = hoopGame(gameDlg.querySelector('canvas'), showScore);
+  let score = null; // { points, left, over }
+  function startGame() {
+    hideItem();
+    gameDlg.showModal();
+    gameDlg.querySelector('canvas').focus({ preventScroll: true }); // not the close button: Space and Enter shoot
+    game.start();
+  }
+  gameDlg.querySelector('.pop-close').onclick = () => gameDlg.close();
+  gameDlg.addEventListener('close', () => {
+    game.stop();
+    score = null;
+    closet.querySelector('.back').focus({ preventScroll: true });
+  });
+  function showScore(s) {
+    score = s;
+    const t = LANGS[lang].ui;
+    let best = +store('hoopBest') || 0;
+    if (s.over && s.points > best) store('hoopBest', (best = s.points));
+    const fmt = (text) => text.replace(/\{(\w+)\}/g, (_, key) => ({ ...s, best })[key]);
+    gameDlg.querySelector('.score').textContent = fmt(t[s.over ? 'gameOver' : 'gameScore']);
+    gameDlg.querySelector('.best').textContent = best ? fmt(t.gameBest) : '';
+  }
+
   addEventListener('keydown', (e) => {
+    if (gameDlg.open) return; // its own Escape closes only the game
     if (!screen.hidden && e.key === 'Escape') return closeScreen();
     // keyboard path through the bonsais or prints (the dialog closes itself on Escape)
     if (specimen.open && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) return showCard(card.id, card.i + (e.key === 'ArrowRight' ? 1 : -1));
@@ -278,6 +306,8 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
     quickContact.textContent = t.sections.contact.menu;
     if (here) active(here);
     if (card) showCard(card.id, card.i);
+    if (score) showScore(score);
+    gameDlg.querySelector('.pop-close').setAttribute('aria-label', t.ui.close);
     if (!closet.hidden) {
       fillStages();
       if (shown >= 0) showItem(shown, pop.offsetLeft - 24, pop.offsetTop + 40, false);
@@ -321,5 +351,7 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
     hideItem,
     showCard,
     cardOpen: () => specimen.open,
+    startGame,
+    score: showScore,
   };
 }

@@ -18,7 +18,13 @@
     "download": "Descarregar el CV (PDF, en anglès)",
     "cvPreview": "Primera pàgina del CV",
     "prev": "Anterior",
-    "next": "Següent"
+    "next": "Següent",
+    "hoop": "Mini-joc: encistella!",
+    "gameTitle": "Mini cistella",
+    "gameHint": "Estira enrere i deixa anar per tirar: com més estiris, més fort. Amb el teclat: espai per apuntar, espai per la força, espai per tirar. Una cistella val 2 punts, o 3 des de darrere la línia de triple. Tens 30 segons des del primer tir.",
+    "gameScore": "Punts: {points} · {left} s",
+    "gameOver": "Temps! Punts: {points}. Torna a tirar per jugar de nou.",
+    "gameBest": "Rècord: {best}"
   },
   "sections": {
     "about": {
