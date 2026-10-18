@@ -1,0 +1,7 @@
+node_modules
+dist
+.playwright-cli
+# local design tooling (third-party Claude Code skills/agents and their notes): kept on disk, not published
+.claude/
+.impeccable/
+skills-lock.json
