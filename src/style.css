@@ -122,6 +122,18 @@ a { color: var(--accent); }
 .stage { min-height: 40px; padding: 8px 12px; text-align: left; border-radius: 12px; } /* may run to two lines: a pill would bulge */
 .stage .meta { display: block; font-size: 0.8125rem; }
 
+/* ---------- the hoop's mini-game: a window with the poster's court ---------- */
+dialog.game { inset: 0; margin: auto; width: min(960px, calc(100vw - 32px)); height: fit-content; padding: 20px 24px 16px; }
+.game[open] { animation: pop-in 0.32s var(--ease-out); }
+.game::backdrop { background: rgb(43 36 32 / 0.35); backdrop-filter: blur(3px); }
+.game .hud { display: flex; align-items: baseline; gap: 6px 20px; flex-wrap: wrap; margin-right: 44px; }
+.game h2 { margin: 0; font-size: var(--t-title); }
+.game .hud p { margin: 0; }
+.game .score { color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+.game .best { color: var(--muted); font-size: var(--t-small); }
+.game canvas { display: block; width: 100%; aspect-ratio: 16 / 9; margin-top: 12px; border-radius: 8px; touch-action: none; cursor: crosshair; outline: none; }
+.game #game-hint { margin: 10px 0 0; }
+
 .popcard {
   position: fixed; width: 340px; max-width: calc(100vw - 32px); margin: 0;
   padding: 18px 20px; border-radius: var(--radius);
@@ -206,7 +218,7 @@ dialog.specimen {
 .no3d .intro { position: static; padding: 24px; max-width: none; box-shadow: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  dialog[open], .specimen[open] { animation: none; }
+  dialog[open], .specimen[open], .game[open] { animation: none; }
 }
 
 /* panel open: give the scene and the panel the whole screen */

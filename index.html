@@ -51,6 +51,16 @@
       <p></p>
       <ul class="stages"></ul>
     </div>
+    <dialog class="game">
+      <div class="hud">
+        <h2 data-i18n="gameTitle"></h2>
+        <p class="score"></p>
+        <p class="best"></p>
+      </div>
+      <canvas tabindex="-1" aria-describedby="game-hint"></canvas>
+      <p id="game-hint" class="meta" data-i18n="gameHint"></p>
+      <button class="pop-close">×</button>
+    </dialog>
     <article class="popcard" hidden aria-live="polite"></article>
     <dialog class="specimen"></dialog>
 

@@ -18,7 +18,13 @@
     "download": "Descargar el CV (PDF, en inglés)",
     "cvPreview": "Primera página del CV",
     "prev": "Anterior",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "hoop": "Minijuego: ¡encesta!",
+    "gameTitle": "Mini canasta",
+    "gameHint": "Tira hacia atrás y suelta para lanzar: cuanto más tires, más fuerte. Con el teclado: espacio para apuntar, espacio para la fuerza, espacio para lanzar. Una canasta vale 2 puntos, o 3 desde detrás de la línea de triple. Tienes 30 segundos desde el primer tiro.",
+    "gameScore": "Puntos: {points} · {left} s",
+    "gameOver": "¡Tiempo! Puntos: {points}. Vuelve a lanzar para jugar otra vez.",
+    "gameBest": "Récord: {best}"
   },
   "sections": {
     "about": {
