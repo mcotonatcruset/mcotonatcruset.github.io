@@ -8,11 +8,13 @@ const LANGS = { en, ca, es };
 const SECTIONS = ['experience', 'about', 'projects', 'contact', 'cv', 'makes', 'skills'];
 // shown on the screen itself (two monitors and the phone): main.js flies the camera into it, no side panel
 const SCREENS = ['about', 'projects', 'contact'];
+// a card lists what's there: the wardrobe's garments, the terrace's bonsais, the shelf's prints
+const CLOSETS = ['experience', 'skills', 'makes'];
 const CV_URL = `${import.meta.env.BASE_URL}cv/Marti_Cotonat_CV_EN.pdf`;
 // card images, in the order of each section's items: bonsai renders made in Blender, prints rendered from their model
 const IMG = {
   skills: ['moyogi', 'chokkan', 'kengai', 'salze', 'planter'].map((n) => `${import.meta.env.BASE_URL}bonsais/${n}.webp`),
-  makes: [`${import.meta.env.BASE_URL}prints/totoro.webp`],
+  makes: ['totoro', 'primaris', 'overlord', 'lychguard', 'termagants'].map((n) => `${import.meta.env.BASE_URL}prints/${n}.webp`),
 };
 // also drawn on the phone's screen in the room (room.js)
 export const LINKS = [
@@ -48,8 +50,8 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
   if (!LANGS[lang]) lang = 'en';
   let current = null;
 
-  function fill(card, it) {
-    card.append(el('h3', it.title));
+  function fill(card, it, heading = 'h3') {
+    card.append(el(heading, it.title));
     if (it.meta) card.append(el('p', it.meta, 'meta'));
     if (it.body) card.append(el('p', it.body));
     if (it.link) {
@@ -67,6 +69,19 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
       card.append(ul);
     }
     return card;
+  }
+
+  // prev / position / next under a card: the wardrobe's garments and the bonsais and prints page the same way (arrow keys too)
+  function pager(i, n, go) {
+    const p = el('div', '', 'pager');
+    const step = (d, label, glyph) => {
+      const b = el('button', glyph, 'step');
+      b.setAttribute('aria-label', LANGS[lang].ui[label]);
+      b.onclick = () => go(i + d);
+      return b;
+    };
+    p.append(step(-1, 'prev', '‹'), el('span', `${i + 1} / ${n}`, 'meta'), step(1, 'next', '›'));
+    return p;
   }
 
   function render(id, into = body) {
@@ -95,6 +110,17 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
       page.append(img);
       into.append(a, page);
     }
+    if (id === 'about' || id === 'projects') {
+      // the dive ends on what a recruiter came for, not a dead end (the name card is hidden inside a screen)
+      const next = el('p', '', 'next');
+      const cv = el('a', LANGS[lang].ui.quickCv, 'btn small');
+      cv.href = CV_URL;
+      cv.download = '';
+      const contact = el('button', LANGS[lang].sections.contact.menu, 'btn small ghost');
+      contact.onclick = () => open('contact');
+      next.append(cv, contact);
+      into.append(next);
+    }
     if (id === 'contact') {
       const ul = el('ul', '', 'links-list');
       for (const [name, href, text] of LINKS) {
@@ -110,38 +136,34 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
     }
   }
 
-  // ---- wardrobe: no side panel, each garment pops its own card ----
+  // ---- wardrobe, terrace and shelf: a card lists what's there, each item opens the centred card (showCard) ----
   const closet = document.querySelector('.closet');
-  const pop = document.querySelector('.popcard');
-  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const specimen = document.querySelector('.specimen');
   const items = (id = 'experience') => LANGS[lang].sections[id].items;
-  let shown = -1;
-
-  function showItem(i, x = innerWidth / 2, y = innerHeight / 3, animate = true) {
-    const all = items();
-    shown = (i + all.length) % all.length;
-    const close = el('button', '×', 'pop-close');
-    close.setAttribute('aria-label', LANGS[lang].ui.close);
-    close.onclick = hideItem;
-    pop.replaceChildren(close);
-    fill(pop, all[shown]);
-    pop.hidden = false;
-    // next to the pointer, kept inside the screen (on mobile CSS pins it to the bottom instead)
-    pop.style.left = `${Math.max(16, Math.min(innerWidth - pop.offsetWidth - 16, x + 24))}px`;
-    pop.style.top = `${Math.max(16, Math.min(innerHeight - pop.offsetHeight - 16, y - 40))}px`;
-    if (animate && !reduceMotion) {
-      pop.animate([{ opacity: 0, transform: 'translateY(12px) scale(0.97)' }, { opacity: 1, transform: 'none' }],
-        { duration: 320, easing: 'cubic-bezier(0.25, 1, 0.5, 1)' }); // ease-out-quart, like every panel
-    }
-  }
-  function hideItem() { pop.hidden = true; shown = -1; }
+  // the stage whose card is showing reads as pressed in the list
+  const mark = (i) => closet.querySelectorAll('.stage').forEach((b, j) => b.setAttribute('aria-pressed', i === j));
 
   // keyboard users land back on the button that opened the screen or the wardrobe (the <dialog>s do this themselves)
+  // a section opened from a link (#about) has no opener: its menu button stands in
   let opener = null;
-  const refocus = () => { opener?.focus({ preventScroll: true }); opener = null; };
+  let last = null;
+  const refocus = () => {
+    (opener?.isConnected ? opener : nav.children[SECTIONS.indexOf(last)])?.focus({ preventScroll: true });
+    opener = null;
+  };
+
+  // each open section is a history entry: the back button or gesture closes it instead of leaving the site.
+  // A deep link (#projects) has no entry of ours behind it, so closing that one only drops the hash
+  let pushed = false;
+  const unhash = () => {
+    if (pushed) history.back();
+    else if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    pushed = false;
+  };
 
   function closeCloset() {
-    hideItem();
+    unhash();
+    if (specimen.open) specimen.close();
     closet.hidden = true;
     current = null;
     onClose();
@@ -154,52 +176,74 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
   const stages = closet.querySelector('.stages');
   function fillStages() {
     const t = LANGS[lang];
-    closet.querySelector('h2').textContent = t.sections[current].title;
-    closet.querySelector('p').textContent = t.ui[current === 'experience' ? 'closetHint' : 'terraceHint'];
+    const s = t.sections[current];
+    closet.querySelector('h2').textContent = s.title;
+    closet.setAttribute('aria-label', s.title);
+    // the bonsai key (size = years) and the note on the prints live in the section's body: the 3D path shows it here
+    closet.querySelector('p').textContent = current === 'experience' ? t.ui.closetHint : [s.body[0], current === 'skills' && t.ui.terraceHint].filter(Boolean).join(' ');
     stages.replaceChildren(...items(current).map((it, i) => {
       const li = el('li');
       const b = el('button', it.title, 'stage');
       b.setAttribute('aria-label', `${it.title} · ${it.meta}`);
+      b.setAttribute('aria-pressed', false);
       if (current === 'experience') b.append(el('span', it.meta.split(' · ')[0], 'meta')); // dates only
-      b.onclick = () => (current === 'experience' ? showItem(i) : showCard(current, i));
+      b.onclick = () => showCard(current, i);
       li.append(b);
       return li;
     }));
   }
 
-  // ---- terrace and print shelf: each bonsai or print opens a centred card with its image beside the text ----
-  const specimen = document.querySelector('.specimen');
-  let card = null; // { id: 'skills' | 'makes', i }
+  // ---- the centred card: a garment's stage, or a bonsai or print with its image beside the text ----
+  let card = null; // { id: 'experience' | 'skills' | 'makes', i }
 
   function showCard(id, i) {
     const all = items(id);
     card = { id, i: (i + all.length) % all.length };
     const it = all[card.i];
-    const img = el('img');
-    img.src = IMG[id][card.i];
-    img.alt = it.alt || it.meta;
     const figure = el('figure');
-    figure.append(img);
+    if (IMG[id]) {
+      const img = el('img');
+      img.src = IMG[id][card.i];
+      img.alt = it.alt || it.meta;
+      img.classList.toggle('photo', !!it.photo); // a real photo, not a render on a clear background
+      figure.append(img);
+    }
+    specimen.classList.toggle('plain', !IMG[id]); // garments have no picture: text only
     const close = el('button', '×', 'pop-close');
     close.setAttribute('aria-label', LANGS[lang].ui.close);
     close.onclick = () => specimen.close();
-    const text = fill(el('div', '', 'text'), it);
-    if (all.length > 1) {
-      // prev / position / next: the arrow keys do the same
-      const pager = el('div', '', 'pager');
-      const step = (d, label, glyph) => {
-        const b = el('button', glyph, 'step');
-        b.setAttribute('aria-label', LANGS[lang].ui[label]);
-        b.onclick = () => showCard(id, card.i + d);
-        return b;
-      };
-      pager.append(step(-1, 'prev', '‹'), el('span', `${card.i + 1} / ${all.length}`, 'meta'), step(1, 'next', '›'));
-      text.append(pager);
-    }
+    const text = fill(el('div', '', 'text'), it, 'h2'); // the card's own title: dialogs start their outline again
+    if (all.length > 1) text.append(pager(card.i, all.length, (j) => showCard(id, j)));
+    close.autofocus = true; // not "previous": the first thing to reach is the way out
+    // paging rebuilds the card: keep focus on the same control (‹, › or ×) instead of dropping it to the page
+    const kept = specimen.open && specimen.contains(document.activeElement) ? document.activeElement.getAttribute('aria-label') : null;
+    specimen.replaceChildren(...(IMG[id] ? [figure] : []), text, close);
+    if (kept) [...specimen.querySelectorAll('button')].find((b) => b.getAttribute('aria-label') === kept)?.focus();
+    specimen.setAttribute('aria-label', it.title);
+    if (!specimen.open) specimen.showModal();
+    if (id === current) mark(card.i);
+  }
+  specimen.addEventListener('close', () => {
+    card = null;
+    mark(-1);
+    if (current === 'cv') { unhash(); current = null; onClose(); refocus(); }
+  });
+
+  // the CV in the same card: its first page as the picture, the download beside it
+  function showCv() {
+    const text = el('div', '', 'text');
+    render('cv', text);
+    const figure = el('figure');
+    figure.append(text.querySelector('.cv-page'));
+    const close = el('button', '×', 'pop-close');
+    close.setAttribute('aria-label', LANGS[lang].ui.close);
+    close.onclick = () => specimen.close();
+    close.autofocus = true;
+    specimen.classList.remove('plain');
+    specimen.setAttribute('aria-label', LANGS[lang].sections.cv.title);
     specimen.replaceChildren(figure, text, close);
     if (!specimen.open) specimen.showModal();
   }
-  specimen.addEventListener('close', () => { card = null; });
   // click on the backdrop = back to the terrace
   specimen.addEventListener('click', (e) => { if (e.target === specimen) specimen.close(); });
 
@@ -207,19 +251,29 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
   const screen = document.querySelector('.screen');
   const screenBody = screen.querySelector('.content');
   function closeScreen() {
+    unhash();
     screen.hidden = true;
     current = null;
     onClose();
     refocus();
   }
   screen.querySelector('.back').onclick = closeScreen;
+  // a monitor's title bar names the screens on the desk: the camera moves straight from one to the next
+  function tabs(id) {
+    screen.querySelector('.path').replaceChildren(...SCREENS.map((s) => {
+      const b = el('button', LANGS[lang].sections[s].menu, 'tab');
+      if (s === id) b.setAttribute('aria-current', 'page');
+      b.onclick = () => { open(s); screen.querySelector('.tab[aria-current]')?.focus(); }; // stay on the tabs, not Back
+      return b;
+    }));
+  }
 
   // ---- mini-game behind the wardrobe's hoop: a window over the room, back to the open wardrobe on close ----
   const gameDlg = document.querySelector('dialog.game');
   const game = hoopGame(gameDlg.querySelector('canvas'), showScore);
   let score = null; // { points, left, over }
   function startGame() {
-    hideItem();
+    if (specimen.open) specimen.close();
     gameDlg.showModal();
     gameDlg.querySelector('canvas').focus({ preventScroll: true }); // not the close button: Space and Enter shoot
     game.start();
@@ -243,40 +297,50 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
   addEventListener('keydown', (e) => {
     if (gameDlg.open) return; // its own Escape closes only the game
     if (!screen.hidden && e.key === 'Escape') return closeScreen();
-    // keyboard path through the bonsais or prints (the dialog closes itself on Escape)
-    if (specimen.open && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) return showCard(card.id, card.i + (e.key === 'ArrowRight' ? 1 : -1));
+    // keyboard path through the garments, bonsais or prints (the dialog closes itself on Escape)
+    if (card && specimen.open && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) return showCard(card.id, card.i + (e.key === 'ArrowRight' ? 1 : -1));
     if (specimen.open || closet.hidden) return; // the card's own Escape closes only the card
-    if (current === 'skills') return e.key === 'Escape' && closeCloset();
-    if (e.key === 'Escape') shown < 0 ? closeCloset() : hideItem();
-    // keyboard path through the garments
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') showItem(shown < 0 ? 0 : shown + (e.key === 'ArrowRight' ? 1 : -1));
+    if (e.key === 'Escape') closeCloset();
+    if (current === 'experience' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) showCard(current, e.key === 'ArrowRight' ? 0 : -1);
   });
 
   function open(id) {
-    const in3d = !document.body.classList.contains('no3d');
-    if (document.activeElement !== document.body) opener = document.activeElement;
-
-    // the print shelf hangs above the printer: walk there and open the first print
-    if (id === 'makes' && in3d) {
-      if (dialog.open) dialog.close();
-      onWalk(id);
-      return showCard(id, 0);
+    if (location.hash !== `#${id}`) {
+      // one entry per visit: moving from one open section to another replaces it
+      if (current || pushed) history.replaceState(null, '', `#${id}`);
+      else history.pushState(null, '', `#${id}`), (pushed = true);
     }
+    const in3d = !document.body.classList.contains('no3d');
+    if (!current && document.activeElement !== document.body) opener = document.activeElement;
+    last = id;
+    // on desktop the menu stays up beside the wardrobe, terrace and shelf card: leaving it for another section closes the card
+    if (specimen.open) specimen.close();
+    if (!closet.hidden && !(CLOSETS.includes(id) && in3d)) closet.hidden = true;
+    if (!screen.hidden && !(SCREENS.includes(id) && in3d)) screen.hidden = true;
+
+    if (id === 'cv' && in3d) {
+      current = id;
+      showCv();
+      return onOpen(id);
+    }
+
     if (SCREENS.includes(id) && in3d) {
       current = id;
       render(id, screenBody);
       const phone = id === 'contact';
       screen.classList.toggle('phone', phone);
       // a phone's status bar shows the time; a monitor, the name of the section
-      screen.querySelector('.path').textContent = phone ? new Date().toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }) : LANGS[lang].sections[id].menu;
+      screen.setAttribute('aria-label', LANGS[lang].sections[id].title);
+      if (phone) screen.querySelector('.path').textContent = new Date().toLocaleTimeString(lang, { hour: 'numeric', minute: '2-digit' });
+      else tabs(id);
       screen.style.opacity = 0; // main.js fades it in as the camera reaches the monitor
       screen.hidden = false;
       screenBody.scrollTop = 0;
       screen.querySelector('.back').focus({ preventScroll: true });
       return onOpen(id);
     }
-    // wardrobe and terrace: the camera walks up to it and a card lists what's there
-    if ((id === 'experience' || id === 'skills') && in3d) {
+    // wardrobe, terrace and print shelf: the camera walks up to it and a card lists what's there
+    if (CLOSETS.includes(id) && in3d) {
       if (dialog.open) dialog.close();
       current = id;
       fillStages();
@@ -286,6 +350,7 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
     }
     current = id;
     render(id);
+    dialog.setAttribute('aria-label', LANGS[lang].sections[id].title);
     if (!dialog.open) dialog.showModal();
     body.scrollTop = 0;
     onOpen(id);
@@ -303,17 +368,20 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
       return b;
     }));
     select.value = lang;
+    select.setAttribute('aria-label', t.ui.language);
+    document.querySelector('.menu').setAttribute('aria-label', t.ui.sections);
     quickContact.textContent = t.sections.contact.menu;
     if (here) active(here);
     if (card) showCard(card.id, card.i);
+    else if (current === 'cv' && specimen.open) showCv();
     if (score) showScore(score);
     gameDlg.querySelector('.pop-close').setAttribute('aria-label', t.ui.close);
     if (!closet.hidden) {
       fillStages();
-      if (shown >= 0) showItem(shown, pop.offsetLeft - 24, pop.offsetTop + 40, false);
+      if (card?.id === current) mark(card.i);
     } else if (current) {
       render(current, screen.hidden ? body : screenBody);
-      if (!screen.hidden && !screen.classList.contains('phone')) screen.querySelector('.path').textContent = t.sections[current].menu;
+      if (!screen.hidden && !screen.classList.contains('phone')) tabs(current);
     }
   }
 
@@ -326,7 +394,7 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
     store('lang', lang);
     applyLang();
   };
-  dialog.addEventListener('close', () => { current = null; onClose(); });
+  dialog.addEventListener('close', () => { unhash(); current = null; onClose(); });
   // click on the backdrop = back to the room
   dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
 
@@ -336,19 +404,30 @@ export function initUI({ onOpen = () => {}, onClose = () => {}, onWalk = () => {
     here = id;
     nav.querySelectorAll('button').forEach((b, i) => {
       const on = SECTIONS[i] === id;
-      b.toggleAttribute('aria-current', on);
+      if (on) b.setAttribute('aria-current', 'location');
+      else b.removeAttribute('aria-current');
     });
   }
 
   applyLang();
+  // a link to /#projects opens that section; back / forward open or close sections
+  function fromHash() {
+    const id = location.hash.slice(1);
+    if (SECTIONS.includes(id)) return document.activeElement.blur(), open(id); // a link opened it, not whatever had focus
+    pushed = false; // the entry is already gone
+    if (specimen.open) specimen.close();
+    if (!screen.hidden) closeScreen();
+    else if (!closet.hidden) closeCloset();
+    else if (dialog.open) dialog.close();
+  }
+  addEventListener('popstate', fromHash);
+  fromHash();
   return {
     open,
     active,
     label: (id) => LANGS[lang].sections[id].menu,
     note: (key) => LANGS[lang].ui[key],
     itemLabel: (i, id = 'experience') => [items(id)[i].title, items(id)[i].meta].join('\n'),
-    showItem,
-    hideItem,
     showCard,
     cardOpen: () => specimen.open,
     startGame,
