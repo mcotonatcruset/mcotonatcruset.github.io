@@ -119,14 +119,14 @@
       "items": [
         {
           "title": "C# · .NET",
-          "meta": "Since the DAM, 2022 · Moyogi · Japanese black pine",
+          "meta": "Since DAM, 2022 · Moyogi · Japanese black pine",
           "alt": "Moyogi · Japanese black pine",
           "body": "The biggest tree on the terrace: my main stack. Desktop apps, a C# API and .NET MAUI web and mobile apps at Asartec.",
           "tags": ["C#", ".NET", ".NET MAUI", "Windows Forms", "Visual Studio", "Git", "Unity"]
         },
         {
           "title": "SQL",
-          "meta": "Since the DAM, 2022 · Chokkan · Japanese cedar",
+          "meta": "Since DAM, 2022 · Chokkan · Japanese cedar",
           "alt": "Chokkan · Japanese cedar",
           "body": "Straight and orderly, like a good schema: the data under everything I build.",
           "tags": ["SQL", "SQL Server", "Oracle", "SQL Developer", "MongoDB", "Firebase"]

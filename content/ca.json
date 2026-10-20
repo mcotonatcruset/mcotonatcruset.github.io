@@ -119,14 +119,14 @@
       "items": [
         {
           "title": "C# · .NET",
-          "meta": "Des del DAM, 2022 · Moyogi · pi negre japonès",
+          "meta": "Des de DAM, 2022 · Moyogi · pi negre japonès",
           "alt": "Moyogi · pi negre japonès",
           "body": "L'arbre més gran de la terrassa: el meu stack principal. Aplicacions d'escriptori, una API en C# i apps web i mòbils amb .NET MAUI a Asartec.",
           "tags": ["C#", ".NET", ".NET MAUI", "Windows Forms", "Visual Studio", "Git", "Unity"]
         },
         {
           "title": "SQL",
-          "meta": "Des del DAM, 2022 · Chokkan · cedre japonès",
+          "meta": "Des de DAM, 2022 · Chokkan · cedre japonès",
           "alt": "Chokkan · cedre japonès",
           "body": "Recte i ordenat, com un bon esquema: les dades que hi ha sota tot el que construeixo.",
           "tags": ["SQL", "SQL Server", "Oracle", "SQL Developer", "MongoDB", "Firebase"]
