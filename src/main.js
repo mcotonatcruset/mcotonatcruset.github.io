@@ -8,7 +8,10 @@ import './style.css';
 // makes shares the printer's stop: the print shelf hangs on the wall above it
 const STOPS = { experience: -5.4, about: -3.265, projects: -2.635, contact: -2.2, cv: -0.6, makes: -0.6, skills: 2.75 };
 const START = 'projects';
-const ZOOM = { experience: 0.55 }; // metres the camera moves in while that section is open
+const ZOOM = { experience: 0.55, makes: 1.6 }; // metres the camera moves in while that section is open
+// metres the camera rises while that section is open: the print shelf hangs above eye level (more on mobile, where the card covers the top)
+const RISE = { makes: [0.6, 0], skills: [0, -1] };
+const PULL_BACK = 6.5; // metres
 const DOOR_ANGLE = 1.75;
 const FILL = 0.92; // share of the view the monitor fills once the camera is inside it
 const WALL_Z = -5;
@@ -62,10 +65,22 @@ if (renderer) {
   monitors.position.set(-2.95, 1.0, -4.1);
   scene.add(monitors);
 
-  // the models (wardrobe kit, bonsais, Totoro) stream in after the first frame: say so until they're all here
+  // the models (wardrobe kit, bonsais, prints) stream in after the first frame: say so until they're all here
   const loading = document.querySelector('.loading');
   THREE.DefaultLoadingManager.onProgress = (url, done, total) => { loading.dataset.progress = `${Math.round((done / total) * 100)}%`; };
-  THREE.DefaultLoadingManager.onLoad = THREE.DefaultLoadingManager.onError = () => { loading.hidden = true; };
+  // a model that fails to load leaves a gap in the room: say so instead of hiding the loader as if all went well
+  let failed = false;
+  THREE.DefaultLoadingManager.onError = () => { failed = true; };
+  THREE.DefaultLoadingManager.onLoad = () => {
+    if (!failed) return (loading.hidden = true);
+    delete loading.dataset.i18n; // keeps the retry button through a language change
+    loading.dataset.progress = '';
+    const retry = document.createElement('button');
+    retry.className = 'btn small ghost';
+    retry.textContent = ui.note('retry');
+    retry.onclick = () => location.reload();
+    loading.replaceChildren(`${ui.note('loadError')} `, retry);
+  };
   const { doors, screens, sign, paint } = buildRoom(scene);
   const screenEl = document.querySelector('.screen');
 
@@ -108,7 +123,7 @@ if (renderer) {
 
   // keep the focused object visible next to the panel: right side panel on desktop, bottom sheet (78vh) on mobile
   function offset() {
-    if (!focused || focused === 'experience' || focused === 'skills' || screens[focused]) return camera.clearViewOffset(); // no side panel for these
+    if (!focused || focused === 'experience' || focused === 'skills' || focused === 'makes' || focused === 'cv' || screens[focused]) return camera.clearViewOffset(); // no side panel for these
     const wide = innerWidth > 800;
     camera.setViewOffset(innerWidth, innerHeight, wide ? PANEL_W / 2 : 0, wide ? 0 : innerHeight * 0.39, innerWidth, innerHeight);
   }
@@ -150,7 +165,7 @@ if (renderer) {
     let o = ray.intersectObject(scene, true)[0]?.object;
     // in the open wardrobe each garment is its own target, on the open terrace each bonsai; while walking, a bonsai,
     // a print or a note, or else the whole object of a section
-    const key = focused === 'experience' ? 'item' : focused === 'skills' ? 'skill' : focused ? null : 'section';
+    const key = { experience: 'item', skills: 'skill', makes: 'print' }[focused] ?? (focused ? null : 'section');
     for (; o && key; o = o.parent) {
       if (o.userData[key] !== undefined || (focused === 'experience' && o.userData.hoop)
         || (!focused && (o.userData.skill !== undefined || o.userData.print !== undefined || o.userData.note))) return o;
@@ -203,7 +218,7 @@ if (renderer) {
     if (wasDrag) return snap();
     const t = pick(e);
     if (focused === 'experience' && t?.userData.hoop) return highlight(null), (tip.hidden = true), ui.startGame();
-    if (focused === 'experience') return t ? ui.showItem(t.userData.item, e.clientX, e.clientY) : ui.hideItem();
+    if (focused === 'experience') return t && ui.showCard('experience', t.userData.item);
     if (!t || t.userData.note) return;
     highlight(null);
     tip.hidden = true;
@@ -227,6 +242,7 @@ if (renderer) {
   let last = 0;
   let active = null;
   let zoom = 0;
+  let rise = 0;
   let open = 0;
   let dive = 0; // 0 = in the room, 1 = inside a monitor
   let screen = null;
@@ -247,7 +263,10 @@ if (renderer) {
     if (!reduceMotion) lean.lerp(leanGoal, 1 - Math.exp(-dt * 3));
     const slow = reduceMotion ? 1 : 1 - Math.exp(-dt * 3.5);
     // ponytail: half the zoom on narrow screens, or the object no longer fits across
-    zoom += ((ZOOM[focused] ?? 0) * (innerWidth > 800 ? 1 : 0.5) - zoom) * slow;
+    // the shelf is narrow: full zoom still fits. The bench is wide: a portrait screen steps back to show all five trees
+    const zoomGoal = camera.aspect < 1 && focused === 'skills' ? -PULL_BACK : (ZOOM[focused] ?? 0) * (innerWidth > 800 || focused === 'makes' ? 1 : 0.5);
+    zoom += (zoomGoal - zoom) * slow;
+    rise += ((RISE[focused]?.[innerWidth > 800 ? 0 : 1] ?? 0) - rise) * slow;
     open += ((focused === 'experience' ? 1 : 0) - open) * slow;
     doors[0].rotation.y = -open * DOOR_ANGLE;
     doors[1].rotation.y = open * DOOR_ANGLE;
@@ -256,8 +275,8 @@ if (renderer) {
     dive += ((screens[focused] ? 1 : 0) - dive) * slow;
     // the eye moves a little with the pointer while the gaze stays on the wall: nearer things shift more
     const still = 1 - dive;
-    camera.position.set(x + lean.x * 0.25 * still, EYE_Y - lean.y * 0.12 * still, WALL_Z + distance() - zoom);
-    look.set(x, LOOK_Y, WALL_Z);
+    camera.position.set(x + lean.x * 0.25 * still, EYE_Y + rise - lean.y * 0.12 * still, WALL_Z + distance() - zoom);
+    look.set(x, LOOK_Y + rise, WALL_Z);
     const size = screen?.geometry.parameters;
     if (screen && dive > 0.001) {
       // straight in front of the screen, along its normal (the phone leans back on its stand)
@@ -280,7 +299,7 @@ if (renderer) {
         opacity: Math.min(1, Math.max(0, (dive - 0.8) / 0.17)), // reaches 1: the approach is asymptotic, so /0.2 stalls at 0.99
       });
     }
-    const here = nearest(x);
+    const here = focused === 'makes' ? 'makes' : nearest(x); // the shelf shares the printer's stop
     if (here !== active) ui.active((active = here));
     renderer.render(scene, camera);
   });

@@ -41,12 +41,12 @@ body {
 /* ---------- surfaces ---------- */
 .intro, .menu, .closet { background: var(--surface); box-shadow: var(--shadow-bar); }
 .intro, .closet { border-radius: var(--radius); padding: 14px 18px; }
-.popcard, dialog { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-card); border: 0; }
+dialog { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-card); border: 0; }
 
 h1, h2, h3 { font-family: var(--serif); font-weight: 400; text-wrap: balance; letter-spacing: -0.005em; line-height: 1.15; }
 :is(dialog, .screen, .closet) h2 { margin: 16px 0 10px; font-size: var(--t-title); }
-:is(dialog, .screen, .popcard, .specimen) h3 { margin: 16px 0 4px; font-size: var(--t-item); }
-:is(dialog, .screen, .popcard) p { line-height: 1.55; margin: 0 0 10px; text-wrap: pretty; }
+:is(dialog, .screen, .specimen) h3 { margin: 16px 0 4px; font-size: var(--t-item); }
+:is(dialog, .screen) p { line-height: 1.55; margin: 0 0 10px; text-wrap: pretty; }
 .meta { color: var(--muted); font-size: var(--t-small); }
 
 /* ---------- controls: one back pill, one close button, one chip ---------- */
@@ -55,7 +55,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 400; text-wrap: balance; le
   border: 0; background: none; border-radius: 999px;
 }
 .back, .stage { box-shadow: inset 0 0 0 1px var(--line); font-size: var(--t-small); padding: 8px 14px; min-height: 36px; }
-.back::before { content: '← '; }
+.back::before { content: '← ' / ''; } /* drawn, not read aloud */
 .pop-close {
   position: absolute; top: 12px; right: 12px; width: 36px; height: 36px;
   box-shadow: inset 0 0 0 1px var(--line); font-size: 1.1rem; line-height: 1;
@@ -82,8 +82,12 @@ a { color: var(--accent); }
 .chips li { background: var(--chip); padding: 3px 10px; border-radius: 999px; font-size: 0.8125rem; }
 .links-list { list-style: none; padding: 0; }
 .links-list li { padding: 10px 0; border-top: 1px solid var(--line); display: grid; }
+.next { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
 .cv-page { display: block; margin-top: 24px; border-radius: 8px; overflow: hidden; box-shadow: 0 0 0 1px var(--line), var(--shadow-bar); }
 .cv-page img { display: block; width: 100%; height: auto; aspect-ratio: 744 / 1052; }
+.specimen .cv-page { margin: 0; width: min(100%, 300px); }
+.specimen .cv-page img { filter: none; max-height: none; }
+.links-list a { display: inline-block; padding-block: 2px; } /* 24px to click on desktop */
 
 /* ---------- name card ---------- */
 .intro { position: fixed; top: 20px; left: 24px; max-width: 420px; pointer-events: none; }
@@ -95,6 +99,7 @@ a { color: var(--accent); }
 .quick .btn { margin: 0; }
 .loading { margin: 8px 0 0; color: var(--muted); font-size: var(--t-small); }
 .loading::after { content: ' ' attr(data-progress); }
+.loading .btn { pointer-events: auto; margin-top: 6px; }
 
 /* ---------- menu ---------- */
 .menu {
@@ -121,6 +126,7 @@ a { color: var(--accent); }
 .stages { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .stage { min-height: 40px; padding: 8px 12px; text-align: left; border-radius: 12px; } /* may run to two lines: a pill would bulge */
 .stage .meta { display: block; font-size: 0.8125rem; }
+.stage[aria-pressed='true'] { background: var(--chip); box-shadow: inset 0 0 0 1px var(--accent); } /* not the focus ring */
 
 /* ---------- the hoop's mini-game: a window with the poster's court ---------- */
 dialog.game { inset: 0; margin: auto; width: min(960px, calc(100vw - 32px)); height: fit-content; padding: 20px 24px 16px; }
@@ -134,12 +140,6 @@ dialog.game { inset: 0; margin: auto; width: min(960px, calc(100vw - 32px)); hei
 .game canvas { display: block; width: 100%; aspect-ratio: 16 / 9; margin-top: 12px; border-radius: 8px; touch-action: none; cursor: crosshair; outline: none; }
 .game #game-hint { margin: 10px 0 0; }
 
-.popcard {
-  position: fixed; width: 340px; max-width: calc(100vw - 32px); margin: 0;
-  padding: 18px 20px; border-radius: var(--radius);
-}
-.popcard h3 { margin: 0 40px 4px 0; }
-.popcard p { margin: 6px 0 0; }
 
 /* ---------- side panel (CV) ---------- */
 dialog {
@@ -163,8 +163,11 @@ dialog.specimen {
   background: radial-gradient(circle at 50% 35%, var(--surface), var(--chip));
 }
 .specimen img { width: 100%; max-height: 440px; object-fit: contain; filter: drop-shadow(0 16px 18px rgb(60 40 20 / 0.28)); }
+.specimen img.photo { width: auto; max-width: 100%; filter: none; border-radius: 10px; }
 .specimen .text { padding: 36px 32px 32px; align-self: center; overflow-y: auto; }
-.specimen h3 { margin: 0 0 6px; font-size: var(--t-title); }
+.specimen.plain { width: min(520px, calc(100vw - 32px)); grid-template: none; } /* a garment's stage: text only */
+.specimen.plain h2 { margin-right: 40px; }
+.specimen h2 { margin: 0 0 6px; font-size: var(--t-title); }
 .specimen .meta { margin: 0 0 14px; }
 .specimen .chips { margin-top: 18px; }
 .pager { display: flex; align-items: center; gap: 8px; margin-top: 20px; }
@@ -183,10 +186,13 @@ dialog.specimen {
   display: flex; align-items: center; gap: 14px; padding: 8px 12px; flex: none;
   background: var(--chip); color: var(--muted); font-size: var(--t-small); font-weight: 700;
 }
-.screen .path { flex: 1; }
+.screen .path { flex: 1; display: flex; gap: 2px; }
+.screen .tab { font: inherit; color: inherit; border: 0; background: none; border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+.screen .tab:hover, .screen .tab:focus-visible { background: var(--surface); }
+.screen .tab[aria-current] { background: var(--surface); color: var(--ink); }
 .screen .back { padding: 4px 12px; min-height: 0; }
 /* a 68ch column: comfortable lines even on a wide monitor */
-.screen .content { overflow-y: auto; padding: 12px max(24px, calc((100% - 68ch) / 2)) 40px; }
+.screen .content { overflow-y: auto; padding: 12px max(24px, calc((100% - 30em) / 2)) 40px; } /* ~65 characters of 14px text */
 .screen.phone { border-radius: 18px; }
 .screen.phone .content { margin-block: auto; } /* a short contact card sits in the middle of the phone, not under its notch */
 
@@ -199,13 +205,14 @@ dialog.specimen {
   .menu { left: 12px; right: 12px; bottom: 12px; transform: none; max-width: none; border-radius: 22px; flex-wrap: wrap; justify-content: center; }
   .menu .links { flex-wrap: wrap; justify-content: center; overflow: visible; gap: 0 2px; }
   .menu button, #lang { min-height: 44px; padding: 10px 9px; font-size: var(--t-small); }
-  .back, .stage, .screen .back { min-height: 44px; }
+  .back, .stage, .screen .back, .screen .tab { min-height: 44px; }
+  .screen .bar { flex-wrap: wrap; row-gap: 4px; } /* three tabs and Back don't share 390px */
+  :is(.links-list, .card) a { display: inline-block; padding-block: 12px; } /* 44px to tap, the main action on the phone */
   .menu button { min-width: 44px; }
   .pop-close { width: 44px; height: 44px; top: 8px; right: 8px; }
   .step { width: 44px; height: 44px; }
   dialog { inset: auto 0 0 0; width: 100vw; max-width: 100vw; height: 78vh; border-radius: var(--radius) var(--radius) 0 0; padding: 20px 20px 32px; }
-  .closet { left: 16px; right: 16px; top: 16px; max-width: none; }
-  .popcard { left: 16px !important; right: 16px; top: auto !important; bottom: 16px; width: auto; transform-origin: bottom center; }
+  .closet { left: 16px; right: 16px; top: auto; bottom: 16px; max-width: none; } /* where the hidden menu was: the hanging clothes and the shelf stay in view */
   dialog.specimen { grid-template-columns: none; grid-template-rows: auto minmax(0, 1fr); border-radius: var(--radius); }
   .specimen figure { padding: 16px; }
   .specimen img { max-height: 32dvh; }
@@ -222,5 +229,13 @@ dialog.specimen {
 }
 
 /* panel open: give the scene and the panel the whole screen */
-.intro, .menu { transition: opacity 0.3s var(--ease-out); }
-body:is(:has(dialog[open]), :has(.closet:not([hidden])), :has(.screen:not([hidden]))) :is(.intro, .menu) { opacity: 0; pointer-events: none; }
+/* visibility, not just opacity: hidden controls leave the tab order too. It hides after the fade but comes back at once,
+   so focus can return to the menu button that opened the section */
+.intro, .menu { transition: opacity 0.3s var(--ease-out), visibility 0s; }
+:is(body:is(:has(dialog[open]), :has(.screen:not([hidden]))) :is(.intro, .menu), body:has(.closet:not([hidden])) .intro) {
+  opacity: 0; visibility: hidden; transition: opacity 0.3s var(--ease-out), visibility 0s 0.3s;
+}
+/* the card beside the wardrobe leaves the menu up on desktop; on mobile the card sits where the menu was */
+@media (max-width: 800px) {
+  body:has(.closet:not([hidden])) .menu { opacity: 0; visibility: hidden; transition: opacity 0.3s var(--ease-out), visibility 0s 0.3s; }
+}

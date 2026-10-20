@@ -47,10 +47,10 @@ Confirmed by the user as non-negotiable, whatever the visual redesign:
 
 ## Evidence on Hand
 
-- Real copy for every section in `content/*.json`: Asartec helpdesk (built alone, now the company-wide ticketing system), the load-time fix (10–20 s → under 1 s), the PRL desktop/API/.NET MAUI apps, the Claude Code automation work, the DAM final project (10/10).
+- Real copy for every section in `content/*.json`: Asartec helpdesk (built alone, now the company-wide ticketing system; public link https://asartec.net shows only the login page, nothing else of it can be shown), the load-time fix (10–20 s → under 1 s), the PRL desktop/API/.NET MAUI apps, the Claude Code automation work, the DAM final project (10/10).
 - CV PDF: `public/cv/Marti_Cotonat_CV_EN.pdf` (English only).
 - Contact: email, LinkedIn, GitHub (in `src/ui.js`).
-- 3D prints: so far only **Totoro** (his print, on the shelf above the printer; model `public/models/totoro.glb`, card image `public/prints/totoro.webp` rendered from it). Printed at home on his Ender-3 V3 SE. Not claimed as his own design. **Open:** more prints and real photos; do not invent any.
+- 3D prints: **Totoro** and his **Warhammer 40K** miniatures (Primaris Lieutenant, Necron Overlord, three Lychguard, three Termagants at 80 %), all on the shelf above the printer. Models `public/models/totoro.glb` and `public/models/warhammer.glb` (decimated from his STLs, unpainted grey, minis shown at 1.5x), card images `public/prints/*.webp` rendered from them, except Totoro's, which is a real photo. Only Totoro is painted (by him: grey body, light belly, green leaf; the model's colours match the photo); the minis are still unpainted. Printed at home on his Ender-3 V3 SE. Not claimed as his own designs. Do not invent any prints.
 - No testimonials, metrics or client logos beyond the content above. Do not fabricate any.
 
 ## Product Principles

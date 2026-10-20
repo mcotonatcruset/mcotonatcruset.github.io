@@ -438,6 +438,16 @@ function prints(scene) {
   const totoro = part(g, -0.62, 1.965, -4.88, -0.35);
   totoro.userData.print = 0;
   glb([['Totoro', totoro, 1.4, 0]], 'totoro'); // the real 14 cm figure
+  // Warhammer 40K minis either side of Totoro, unpainted (public/models/warhammer.glb, real size in mm)
+  // ponytail: shown at 1.5x, real 6 cm minis are specks from the camera
+  glb([
+    ['Lychguard1', -0.925, -4.9, 3], ['Overlord', -0.865, -4.86, 2], ['Lychguard2', -0.775, -4.92, 3], ['Lychguard3', -0.715, -4.86, 3],
+    ['Primaris', -0.52, -4.88, 1], ['Termagant1', -0.45, -4.9, 4], ['Termagant2', -0.375, -4.86, 4], ['Termagant3', -0.3, -4.91, 4],
+  ].map(([name, x, z, print]) => {
+    const p = part(g, x, 1.965, z);
+    p.userData.print = print;
+    return [name, p, 1.5, 0];
+  }), 'warhammer');
   // lower shelf: spare filament, no invented prints
   [['#2f5c96', -0.78], ['#e8e2d8', -0.6], [PLA.terracotta, -0.42]].forEach(([c, x]) => {
     const s = part(g, x, 1.565 + 0.07, -4.9);

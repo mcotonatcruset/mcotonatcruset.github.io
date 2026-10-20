@@ -1,17 +1,21 @@
 {
   "ui": {
     "role": "Software Developer · C# · .NET · SQL",
-    "facts": "At Asartec since 2025 · Girona · open to remote",
-    "hint": "This is my room. Scroll or drag to walk through it, and click things to open them.",
+    "facts": "2.5 years' experience · at Asartec since 2025 · Girona · open to remote",
+    "hint": "This is my room. Scroll, drag or use the ← → keys to walk through it, and click things to open them.",
     "hintTouch": "This is my room. Swipe to walk through it and tap things to open them.",
     "keyboard": "My custom keyboard\nCase: MonsGeek M1W\nSwitches: Akko V3 Cream Yellow Pro\nKeycaps: Temu",
     "mouse": "My mouse\nLogitech G Pro X Superlight 2",
     "pc": "My PC\nCPU: AMD Ryzen 7 5800X\nGPU: NVIDIA GeForce RTX 5060 Ti\nRAM: 32 GB DDR4 3200 (Kingston Fury)\nMotherboard: ASUS Prime B550M-A\nSSD: 1 TB Kioxia Exceria Plus G3",
     "bonsaiSign": "Amateur bonsai\nStill learning. At home I grow\na serissa, a hakuro nishiki and a ficus",
     "back": "Back to the room",
-    "closetHint": "Click a piece of clothing to see each stage.",
-    "terraceHint": "Each bonsai is a skill. Tap a tree, or pick one here:",
+    "closetHint": "Pick a piece of clothing, or a stage here:",
+    "terraceHint": "Pick a tree, in the room or here:",
     "loading": "Loading the room…",
+    "sections": "Sections",
+    "language": "Language",
+    "loadError": "Part of the room didn't load. Everything is still in the menu.",
+    "retry": "Reload",
     "stages": "Stages",
     "quickCv": "CV (PDF)",
     "close": "Close",
@@ -40,6 +44,7 @@
           "title": "asartec.net — company helpdesk",
           "meta": "Asartec · built alone",
           "body": "A custom helpdesk that became the company-wide ticketing system. First version in Node.js, later rebuilt in PHP.",
+          "link": { "href": "https://asartec.net", "text": "asartec.net (login page only)" },
           "tags": ["Node.js", "PHP", "Web"]
         },
         {
@@ -114,31 +119,36 @@
       "items": [
         {
           "title": "C# · .NET",
-          "meta": "Moyogi · Japanese black pine",
+          "meta": "Since the DAM, 2022 · Moyogi · Japanese black pine",
+          "alt": "Moyogi · Japanese black pine",
           "body": "The biggest tree on the terrace: my main stack. Desktop apps, a C# API and .NET MAUI web and mobile apps at Asartec.",
           "tags": ["C#", ".NET", ".NET MAUI", "Windows Forms", "Visual Studio", "Git", "Unity"]
         },
         {
           "title": "SQL",
-          "meta": "Chokkan · Japanese cedar",
+          "meta": "Since the DAM, 2022 · Chokkan · Japanese cedar",
+          "alt": "Chokkan · Japanese cedar",
           "body": "Straight and orderly, like a good schema: the data under everything I build.",
           "tags": ["SQL", "SQL Server", "Oracle", "SQL Developer", "MongoDB", "Firebase"]
         },
         {
           "title": "VB.NET",
-          "meta": "Han-kengai · juniper",
+          "meta": "Asartec, since May 2025 · Han-kengai · juniper",
+          "alt": "Han-kengai · juniper",
           "body": "Old wood that still holds strong: the Windows Forms PRL application I develop at Asartec.",
           "tags": ["VB.NET", "Windows Forms"]
         },
         {
           "title": "Web",
-          "meta": "Shidare · weeping willow",
+          "meta": "1 year at Accenture · Shidare · weeping willow",
+          "alt": "Shidare · weeping willow",
           "body": "Flexible and always moving: Angular front ends and Node.js, Java and PHP back ends at Accenture, and the helpdesk I built at Asartec.",
           "tags": ["TypeScript / JavaScript", "Angular", "Node.js", "PHP", "Java", "VS Code"]
         },
         {
           "title": "What's next",
           "meta": "Sapling · young olive, wired",
+          "alt": "Sapling · young olive, wired",
           "body": "Still wired, still in training: where I want to grow next.",
           "tags": ["Backend .NET", "AI & automation", "Claude Code", "Python", "Cloud"]
         }
@@ -147,19 +157,44 @@
     "makes": {
       "menu": "3D prints",
       "title": "Things I've printed",
-      "body": ["Printed at home on my Ender-3 V3 SE. Totoro is the first one on the shelf; more prints are on the way as I photograph them."],
+      "body": ["Printed at home on my Ender-3 V3 SE: Totoro, which I painted myself, and Warhammer 40K miniatures, still unpainted grey."],
       "items": [
         {
           "title": "Totoro",
           "meta": "Printed at home · Ender-3 V3 SE",
-          "body": "About 14 cm tall. The first figure to earn a place on the shelf above the printer.",
-          "alt": "Totoro on the shelf"
+          "body": "About 14 cm tall. The first figure to earn a place on the shelf above the printer. Painted by hand: grey body, light belly, a leaf on its head.",
+          "alt": "Hand-painted Totoro photographed on a dark cloth",
+          "photo": true
+        },
+        {
+          "title": "Primaris Lieutenant",
+          "meta": "Printed at home · Ender-3 V3 SE · Warhammer 40K",
+          "body": "A Space Marine lieutenant with a power sword, about 6 cm tall.",
+          "alt": "Unpainted Primaris Lieutenant with a raised power sword"
+        },
+        {
+          "title": "Necron Overlord",
+          "meta": "Printed at home · Ender-3 V3 SE · Warhammer 40K",
+          "body": "An Overlord with a void scythe and a tachyon arrow, about 6.5 cm tall.",
+          "alt": "Unpainted Necron Overlord with a scythe"
+        },
+        {
+          "title": "Lychguard",
+          "meta": "Printed at home · Ender-3 V3 SE · Warhammer 40K",
+          "body": "Three Necron Lychguard in different poses, about 6 cm tall each.",
+          "alt": "Three unpainted Necron Lychguard"
+        },
+        {
+          "title": "Termagants",
+          "meta": "Printed at home · Ender-3 V3 SE · Warhammer 40K",
+          "body": "Tyranid termagants with fleshborers, printed at 80 % scale so they match the rest of the army. Three of the brood are on the shelf.",
+          "alt": "Three unpainted Tyranid termagants"
         }
       ]
     },
     "cv": {
       "menu": "CV",
-      "title": "Print my CV",
+      "title": "My CV",
       "body": ["Short on time? Here is everything on two pages."]
     },
     "contact": {

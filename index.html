@@ -45,37 +45,38 @@
 
     <div class="tooltip" hidden></div>
 
-    <div class="closet" hidden>
-      <button class="back" data-i18n="back"></button>
-      <h2></h2>
-      <p></p>
-      <ul class="stages"></ul>
-    </div>
-    <dialog class="game">
-      <div class="hud">
-        <h2 data-i18n="gameTitle"></h2>
-        <p class="score"></p>
-        <p class="best"></p>
-      </div>
-      <canvas tabindex="-1" aria-describedby="game-hint"></canvas>
-      <p id="game-hint" class="meta" data-i18n="gameHint"></p>
-      <button class="pop-close">×</button>
-    </dialog>
-    <article class="popcard" hidden aria-live="polite"></article>
-    <dialog class="specimen"></dialog>
-
-    <section class="screen" hidden>
-      <div class="bar">
-        <span class="path"></span>
+    <main>
+      <div class="closet" role="region" hidden>
         <button class="back" data-i18n="back"></button>
+        <h2></h2>
+        <p></p>
+        <ul class="stages"></ul>
       </div>
-      <div class="content"></div>
-    </section>
+      <dialog class="game" aria-labelledby="game-title">
+        <div class="hud">
+          <h2 id="game-title" data-i18n="gameTitle"></h2>
+          <p class="score"></p>
+          <p class="best"></p>
+        </div>
+        <canvas tabindex="-1" aria-describedby="game-hint"></canvas>
+        <p id="game-hint" class="meta" data-i18n="gameHint"></p>
+        <button class="pop-close">×</button>
+      </dialog>
+      <dialog class="specimen"></dialog>
 
-    <dialog id="panel">
-      <form method="dialog"><button class="back" data-i18n="back"></button></form>
-      <div class="content"></div>
-    </dialog>
+      <section class="screen" hidden>
+        <div class="bar">
+          <span class="path"></span>
+          <button class="back" data-i18n="back"></button>
+        </div>
+        <div class="content"></div>
+      </section>
+
+      <dialog id="panel">
+        <form method="dialog"><button class="back" data-i18n="back"></button></form>
+        <div class="content"></div>
+      </dialog>
+    </main>
 
     <noscript>Martí Cotonat Cruset — Software Developer (C#, .NET, SQL). marticotonat@gmail.com · github.com/mcotonatcruset</noscript>
     <script type="module" src="/src/main.js"></script>

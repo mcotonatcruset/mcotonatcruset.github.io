@@ -1,17 +1,21 @@
 {
   "ui": {
     "role": "Desarrollador de software · C# · .NET · SQL",
-    "facts": "En Asartec desde 2025 · Girona · abierto a remoto",
-    "hint": "Esta es mi habitación. Haz scroll o arrastra para recorrerla, y haz clic en los objetos para abrirlos.",
+    "facts": "2,5 años de experiencia · en Asartec desde 2025 · Girona · abierto a remoto",
+    "hint": "Esta es mi habitación. Haz scroll, arrastra o usa las teclas ← → para recorrerla, y haz clic en los objetos para abrirlos.",
     "hintTouch": "Esta es mi habitación. Desliza para recorrerla y toca los objetos para abrirlos.",
     "keyboard": "Mi teclado custom\nCarcasa: MonsGeek M1W\nSwitches: Akko V3 Cream Yellow Pro\nTeclas: Temu",
     "mouse": "Mi ratón\nLogitech G Pro X Superlight 2",
     "pc": "Mi PC\nCPU: AMD Ryzen 7 5800X\nGPU: NVIDIA GeForce RTX 5060 Ti\nRAM: 32 GB DDR4 3200 (Kingston Fury)\nPlaca: ASUS Prime B550M-A\nSSD: 1 TB Kioxia Exceria Plus G3",
     "bonsaiSign": "Bonsáis de aficionado\nAún aprendiendo. En casa cultivo\nuna serissa, un hakuro nishiki y un ficus",
     "back": "Volver a la habitación",
-    "closetHint": "Haz clic en una prenda para ver cada etapa.",
-    "terraceHint": "Cada bonsái es una habilidad. Toca un árbol o elige uno aquí:",
+    "closetHint": "Elige una prenda o una etapa de aquí:",
+    "terraceHint": "Elige un árbol, en la escena o aquí:",
     "loading": "Cargando la habitación…",
+    "sections": "Secciones",
+    "language": "Idioma",
+    "loadError": "Parte de la habitación no se ha cargado. Todo sigue en el menú.",
+    "retry": "Volver a cargar",
     "stages": "Etapas",
     "quickCv": "CV (PDF, EN)",
     "close": "Cerrar",
@@ -40,6 +44,7 @@
           "title": "asartec.net, el helpdesk de la empresa",
           "meta": "Asartec · hecho en solitario",
           "body": "Un helpdesk a medida que ahora es el sistema de tickets de toda la empresa. Primera versión en Node.js, rehecha después en PHP.",
+          "link": { "href": "https://asartec.net", "text": "asartec.net (solo la página de acceso)" },
           "tags": ["Node.js", "PHP", "Web"]
         },
         {
@@ -114,31 +119,36 @@
       "items": [
         {
           "title": "C# · .NET",
-          "meta": "Moyogi · pino negro japonés",
+          "meta": "Desde el DAM, 2022 · Moyogi · pino negro japonés",
+          "alt": "Moyogi · pino negro japonés",
           "body": "El árbol más grande de la terraza: mi stack principal. Aplicaciones de escritorio, una API en C# y apps web y móviles con .NET MAUI en Asartec.",
           "tags": ["C#", ".NET", ".NET MAUI", "Windows Forms", "Visual Studio", "Git", "Unity"]
         },
         {
           "title": "SQL",
-          "meta": "Chokkan · cedro japonés",
+          "meta": "Desde el DAM, 2022 · Chokkan · cedro japonés",
+          "alt": "Chokkan · cedro japonés",
           "body": "Recto y ordenado, como un buen esquema: los datos que hay debajo de todo lo que construyo.",
           "tags": ["SQL", "SQL Server", "Oracle", "SQL Developer", "MongoDB", "Firebase"]
         },
         {
           "title": "VB.NET",
-          "meta": "Han-kengai · enebro",
+          "meta": "Asartec, desde mayo de 2025 · Han-kengai · enebro",
+          "alt": "Han-kengai · enebro",
           "body": "Madera vieja que aún aguanta: la aplicación PRL en Windows Forms que desarrollo en Asartec.",
           "tags": ["VB.NET", "Windows Forms"]
         },
         {
           "title": "Web",
-          "meta": "Shidare · sauce llorón",
+          "meta": "1 año en Accenture · Shidare · sauce llorón",
+          "alt": "Shidare · sauce llorón",
           "body": "Flexible y siempre en movimiento: frontends en Angular y backends en Node.js, Java y PHP en Accenture, y el helpdesk que hice en Asartec.",
           "tags": ["TypeScript / JavaScript", "Angular", "Node.js", "PHP", "Java", "VS Code"]
         },
         {
           "title": "Lo que viene",
           "meta": "Plantón · olivo joven con alambre",
+          "alt": "Plantón · olivo joven con alambre",
           "body": "Todavía con alambre, todavía en formación: hacia dónde quiero crecer.",
           "tags": ["Backend .NET", "IA y automatización", "Claude Code", "Python", "Cloud"]
         }
@@ -147,19 +157,44 @@
     "makes": {
       "menu": "Impresiones 3D",
       "title": "Cosas que he impreso",
-      "body": ["Impresas en casa con mi Ender-3 V3 SE. Totoro es la primera de la balda; irán llegando más a medida que las fotografíe."],
+      "body": ["Impresas en casa con mi Ender-3 V3 SE: Totoro, que pinté yo, y miniaturas de Warhammer 40K, aún grises, sin pintar."],
       "items": [
         {
           "title": "Totoro",
           "meta": "Impreso en casa · Ender-3 V3 SE",
-          "body": "Mide unos 14 cm. La primera figura que se ha ganado un sitio en la balda de encima de la impresora.",
-          "alt": "Totoro en la balda"
+          "body": "Mide unos 14 cm. La primera figura que se ha ganado un sitio en la balda de encima de la impresora. Pintado a mano: cuerpo gris, barriga clara y una hoja en la cabeza.",
+          "alt": "Totoro pintado a mano, fotografiado sobre una tela oscura",
+          "photo": true
+        },
+        {
+          "title": "Teniente Primaris",
+          "meta": "Impreso en casa · Ender-3 V3 SE · Warhammer 40K",
+          "body": "Un teniente de los Space Marines con espada de energía, de unos 6 cm.",
+          "alt": "Teniente Primaris sin pintar con la espada en alto"
+        },
+        {
+          "title": "Overlord necrón",
+          "meta": "Impreso en casa · Ender-3 V3 SE · Warhammer 40K",
+          "body": "Un Overlord con guadaña del vacío y flecha taquiónica, de unos 6,5 cm.",
+          "alt": "Overlord necrón sin pintar con una guadaña"
+        },
+        {
+          "title": "Lychguard",
+          "meta": "Impreso en casa · Ender-3 V3 SE · Warhammer 40K",
+          "body": "Tres Lychguard necrones en posturas distintas, de unos 6 cm cada uno.",
+          "alt": "Tres Lychguard necrones sin pintar"
+        },
+        {
+          "title": "Termagantes",
+          "meta": "Impreso en casa · Ender-3 V3 SE · Warhammer 40K",
+          "body": "Termagantes tiránidos con fleshborer, impresos al 80 % para que cuadren con el resto del ejército. Tres del enjambre están en la balda.",
+          "alt": "Tres termagantes tiránidos sin pintar"
         }
       ]
     },
     "cv": {
       "menu": "CV",
-      "title": "Imprime mi CV",
+      "title": "Mi CV",
       "body": ["¿Vas justo de tiempo? Aquí lo tienes todo en dos páginas."]
     },
     "contact": {
